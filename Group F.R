@@ -2,15 +2,17 @@
 
 #Import Data Sets
 library(readxl)
-Team_Offense <- read_excel("Desktop/Team Offense.xlsx")
+# You hardwired all your file references. Not only can I not run these
+# but no one else on your team will be able to, either.   -10
+Team_Offense <- read_excel("Team Offense.xlsx")
 View(Team_Offense)
 
 library(readxl)
-NFC_Standings <- read_excel("Desktop/NFC Standings.xlsx")
+NFC_Standings <- read_excel("NFC Standings.xlsx")
 View(NFC_Standings)
 
 library(readxl)
-AFC_Standings <- read_excel("Desktop/AFC Standings.xlsx")
+AFC_Standings <- read_excel("AFC Standings.xlsx")
 View(AFC_Standings)
 
 #Cleaning Data to Remove Unwanted Columns
