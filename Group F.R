@@ -1,23 +1,38 @@
 #Group F Team Script
 
+#Installing Required Packages
+# install.packages("tidyverse")
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+
+# install.packages("ggplot2")
+if(!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
+
+# install.packages("ggrepel")
+if(!require("ggrepel")) install.packages("ggrepel")
+library(ggrepel)
+
+#install.packages ("scales")
+if(!require("scales")) install.packages("scales")
+library(scales)
+
 #Import Data Sets
-library(readxl)
-# You hardwired all your file references. Not only can I not run these
-# but no one else on your team will be able to, either.   -10
-Team_Offense <- read_excel("Team Offense.xlsx")
-View(Team_Offense)
+library(readr)
+footballyrds_wins <- read_csv("footballyrds_wins.csv")
+str(footballyrds_wins)
 
-library(readxl)
-NFC_Standings <- read_excel("NFC Standings.xlsx")
-View(NFC_Standings)
+#Creating and Labeling Scatter Plot
+p <- ggplot(data = footballyrds_wins,
+           mapping = aes(x = Yds, y = Wins)) 
 
-library(readxl)
-AFC_Standings <- read_excel("AFC Standings.xlsx")
-View(AFC_Standings)
+p + geom_point()
 
-#Cleaning Data to Remove Unwanted Columns
-Team_Offense <- subset(Team_Offense, select = -c(-1:-5))
-
-NFC_Standings <- subset(NFC_Standings, select = -c(-1:-5))
-
-AFC_Standings <- subset(AFC_Standings, select = -c(-1:-5))
+p + geom_point() +
+  geom_text_repel(data = subset(footballyrds_wins, Wins > 2,
+                                max.overlaps = Inf),
+                  mapping = aes(label = Tm)) +
+  labs(x="Total Yards",
+       y = "Total Wins",
+       title = "Total Yards Compared to Total Wins NFL 2021") +
+  scale_y_continuous(labels = scientific)
